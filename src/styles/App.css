@@ -1,0 +1,158 @@
+* {
+  box-sizing: border-box;
+}
+.comment-container {
+  min-width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: flex-start;
+}
+.comment-left {
+}
+.comment-icon {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background-color: rgb(221, 73, 122);
+  border: 2px solid black;
+}
+.comment-info {
+  width: 100%;
+  padding-left: 15px;
+}
+.comment-right {
+  width: 100%;
+
+  padding-left: 15px;
+}
+.comment-name {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.comment-text {
+  max-width: 500px;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+.answer-form-container {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.answer-input-container {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  height: 35px;
+}
+.answer-input {
+  padding: 0px 10px;
+  height: 100%;
+  width: 100%;
+  font-size: 17px;
+}
+.answer-button {
+  background-color: rgb(31, 31, 131);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 10px;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+  white-space: nowrap;
+  color: white;
+
+  height: 35px;
+  border-radius: 10px;
+  font-size: 18px;
+  padding: 0px 15px;
+}
+.comment-input-container {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  height: 35px;
+  margin-bottom: 20px;
+}
+.comment-input {
+  padding: 0px 10px;
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  margin-right: 10px;
+  font-size: 17px;
+}
+.comment-button {
+  background-color: rgb(31, 31, 131);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 35px;
+  border-radius: 10px;
+  font-size: 18px;
+  padding: 0px 15px;
+  border: none;
+  cursor: pointer;
+  /* font-weight: 700; */
+  margin: 0px;
+  white-space: nowrap;
+  color: white;
+}
+
+.rating-container {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-right: 10px;
+}
+.rating-count {
+  font-weight: 700;
+}
+.circle-button {
+  background-color: rgb(152, 152, 209);
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  margin-right: 5px;
+  transition-duration: 0.2s;
+}
+.like-img-wrapper {
+  height: 20px;
+  width: 20px;
+  position: relative;
+}
+.dislike-img-wrapper {
+  transform: rotate(180deg);
+  height: 20px;
+  width: 20px;
+  position: relative;
+}
+.img-container {
+  width: 100%;
+  height: 600px;
+  position: relative;
+}
+.img {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.img-contain {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
