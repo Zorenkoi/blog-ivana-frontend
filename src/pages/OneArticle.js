@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import like from '../images/simple-like.png'
 import { useRating } from '../hooks/useRating'
 import { useCheckAuth } from '../hooks/useCheckAuth'
 import axios from '../axios'
+import { openLogInModal } from '../redux/slices/modalReducer'
 
 import Loading from '../components/Loading'
 import Error from '../components/Error'
@@ -121,7 +122,7 @@ const ShowImg = ({ value }) => {
       <img
         src={`https://blog-ivana-35067453cc4f.herokuapp.com/${value.fileName}`}
         alt={value.imgName}
-        className='img'
+        className='img-contain'
       />
     </div>
   )
@@ -155,11 +156,15 @@ const FirstCommentBlock = ({ articleId }) => {
 }
 
 const CommentForm = ({ articleId, updateComments }) => {
+  const dispatch = useDispatch()
   const isLogin = useCheckAuth()
   const [commentText, setCommentText] = useState('')
 
   const submit = () => {
-    if (!isLogin) return alert('зарегайся сука')
+    if (!isLogin) {
+      dispatch(openLogInModal())
+      return
+    }
 
     const payload = {
       commentText,
@@ -173,9 +178,9 @@ const CommentForm = ({ articleId, updateComments }) => {
       })
       .catch((err) => {
         console.log(err)
-        if (err.response.data.message === 'нет доступа') {
-          alert('зарегайся сука')
-        }
+        // if (err.response.data.message === 'нет доступа') {
+        // dispatch(openLogInModal())
+        // }
       })
 
     setCommentText('')
@@ -332,7 +337,9 @@ const Rate = ({
   arrDislikes,
   updateAnswers,
 }) => {
+  const isLogin = useCheckAuth()
   const { userId } = useSelector((state) => state.userReducer)
+  const dispatch = useDispatch()
 
   const [timer, setTimer] = useState(null)
   const handleServer = (action) => {
@@ -383,6 +390,10 @@ const Rate = ({
   }, [userId, arrLikes, arrDislikes])
 
   const clickAddAnswer = () => {
+    if (!isLogin) {
+      dispatch(openLogInModal())
+      return
+    }
     updateAnswers()
     toggleShowRating()
   }

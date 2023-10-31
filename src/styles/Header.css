@@ -25,11 +25,12 @@
 
 .header-link {
   color: white;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700px;
   cursor: pointer;
   margin-right: 30px;
   transition-duration: 0.3s;
+  text-decoration: none;
 }
 .header-link:hover {
   opacity: 0.8;

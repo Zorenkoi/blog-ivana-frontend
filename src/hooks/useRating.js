@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useCheckAuth } from './useCheckAuth'
+import { useDispatch } from 'react-redux'
+import { openLogInModal } from '../redux/slices/modalReducer'
 
 export const useRating = (userId, arrLikes, arrDislikes, click) => {
+  const dispatch = useDispatch()
   const isLogin = useCheckAuth()
 
   const { userLikeThis, userDislikeThis, countLikes, countDislikes } =
@@ -13,7 +16,10 @@ export const useRating = (userId, arrLikes, arrDislikes, click) => {
   const [numDislikes, setNumDislikes] = useState(countDislikes)
 
   const clickLike = () => {
-    if (!isLogin) return alert('зарегайся сука')
+    if (!isLogin) {
+      dispatch(openLogInModal())
+      return
+    }
 
     setDisliked(false)
     setLiked((liked) => {
@@ -23,7 +29,10 @@ export const useRating = (userId, arrLikes, arrDislikes, click) => {
     })
   }
   const clickDislike = () => {
-    if (!isLogin) return alert('зарегайся сука')
+    if (!isLogin) {
+      dispatch(openLogInModal())
+      return
+    }
 
     setLiked(false)
     setDisliked((disliked) => {

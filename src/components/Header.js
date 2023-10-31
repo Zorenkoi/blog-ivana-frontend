@@ -41,7 +41,7 @@ const Header = () => {
 
             {isLogin ? (
               <Link to='/createarticle' className='header-link'>
-                Створити пост
+                Створити статтю
               </Link>
             ) : null}
           </div>
