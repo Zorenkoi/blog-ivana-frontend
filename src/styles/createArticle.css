@@ -1,6 +1,8 @@
 .create-article-wrapper {
+  display: block;
+  width: 100%;
   /* background-color: #f9f3cc; */
-  padding: 20px 20px 40px;
+  /* padding: 20px 20px 40px; */
 }
 .ar-block {
   width: 100%;

@@ -1,0 +1,10 @@
+.footer {
+  width: 100%;
+  background-color: #0e2954;
+}
+.footer-wrapper {
+  padding: 0px 20px;
+  height: 50px;
+  max-width: 1040px;
+  margin: 0 auto;
+}

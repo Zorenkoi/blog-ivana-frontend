@@ -52,7 +52,7 @@ const OneArticle = () => {
 const ShowTitle = ({ title, authorName }) => {
   return (
     <>
-      <div className='row-space mt-20'>
+      <div className='row-space'>
         <h1 className={s.title}>{title}</h1>
       </div>
     </>
@@ -181,6 +181,10 @@ const CommentForm = ({ articleId, updateComments }) => {
     setCommentText('')
   }
 
+  const reset = () => {
+    setCommentText('')
+  }
+
   return (
     <>
       <div className='comment-input-container mb-20'>
@@ -191,8 +195,11 @@ const CommentForm = ({ articleId, updateComments }) => {
           className='comment-input'
           placeholder='ваш комментар:'
         />
-        <button onClick={submit} className='comment-button'>
-          відправити
+        <button onClick={reset} className='comment-button empty'>
+          скасувати
+        </button>
+        <button onClick={submit} className='comment-button contained'>
+          комментувати
         </button>
       </div>
     </>
@@ -304,10 +311,13 @@ const AnswerForm = ({ parentCommentId, updateAnswers, toggleShowRating }) => {
           className='answer-input'
           placeholder='ваша відповідь:'
         />
-        <button onClick={toggleShowRating} className='answer-button'>
-          відмінити
+        <button
+          onClick={toggleShowRating}
+          className='comment-button empty ml-10'
+        >
+          скасувати
         </button>
-        <button onClick={submit} className='answer-button'>
+        <button onClick={submit} className='comment-button contained ml-10'>
           відповісти
         </button>
       </div>
@@ -406,7 +416,7 @@ const Rate = ({
         </div>
       </div>
 
-      <button onClick={clickAddAnswer} className='answer-button'>
+      <button onClick={clickAddAnswer} className='comment-button empty'>
         відповісти
       </button>
     </div>

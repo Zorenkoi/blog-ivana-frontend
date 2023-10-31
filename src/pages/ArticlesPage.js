@@ -2,11 +2,15 @@ import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { cutString } from '../helper/cutString'
 import { Link, useHistory } from 'react-router-dom'
-import Error from '../components/Error'
-import Loading from '../components/Loading'
 import axios from '../axios'
+
 import trashImg from '../images/trash.png'
 import editImg from '../images/edit.png'
+
+import Error from '../components/Error'
+import Loading from '../components/Loading'
+import Hints from '../components/Hints'
+
 import s from '../styles/articles.module.css'
 
 const ArticlesPage = () => {
@@ -21,6 +25,7 @@ const ArticlesPage = () => {
       .then((response) => {
         setStatusPage('ok')
         setArticles(response.data.articles)
+        console.log(response.data.articles)
       })
       .catch((err) => {
         setStatusPage('error')
@@ -51,27 +56,32 @@ const ArticlesPage = () => {
   if (statusPage === 'error') return <Error />
 
   const filteredArticles = filterArticlesByQuery(articles, query)
+  const sortedArticles = sortArticlesByCreatedAt(filteredArticles)
 
   return (
-    <>
-      <input
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        type='text'
-        className='input full-width mt-20'
-        placeholder='Введіть назву статті:'
-      />
-      {filteredArticles.length === 0 ? (
-        <h1 className='mt-20'>Немає статей по запиту: "{query}"</h1>
-      ) : (
-        <div className={s.articlesContainer}>
-          <ArticlesList
-            articles={filteredArticles}
-            deleteArticle={deleteArticle}
-          />
-        </div>
-      )}
-    </>
+    <div className='articles-wrapper'>
+      <div className='articles-main'>
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          type='text'
+          className='input full-width'
+          placeholder='Введіть назву статті:'
+        />
+        {sortedArticles.length === 0 ? (
+          <h1 className='mt-20'>Немає статей по запиту: "{query}"</h1>
+        ) : (
+          <div className={s.articlesContainer}>
+            <ArticlesList
+              articles={filteredArticles}
+              deleteArticle={deleteArticle}
+            />
+          </div>
+        )}
+      </div>
+
+      <Hints />
+    </div>
   )
 }
 
@@ -80,7 +90,15 @@ const ArticlesList = ({ articles, deleteArticle }) => {
   const { userId } = useSelector((state) => state.userReducer)
 
   return articles.map(
-    ({ title, description, authorName, authorId, _id, arrImgFileNames }) => {
+    ({
+      title,
+      description,
+      authorName,
+      createdAt,
+      authorId,
+      _id,
+      arrImgFileNames,
+    }) => {
       const isAuthor = authorId === userId
 
       const clickDelete = () => {
@@ -97,6 +115,7 @@ const ArticlesList = ({ articles, deleteArticle }) => {
           title={title}
           description={description}
           authorName={authorName}
+          createdAt={createdAt}
           isAuthor={isAuthor}
           _id={_id}
           arrImgFileNames={arrImgFileNames}
@@ -111,12 +130,16 @@ const ArticleCard = ({
   title,
   description,
   authorName,
+  createdAt,
   isAuthor,
   _id,
   arrImgFileNames,
   clickDelete,
   clickChange,
 }) => {
+  console.log(createdAt)
+  const date = formatDate(createdAt)
+  console.log(date)
   return (
     <div className='article-card'>
       {arrImgFileNames.length !== 0 ? (
@@ -140,6 +163,7 @@ const ArticleCard = ({
         </div>
         <div className='article-card-bottom'>
           <div className='article-card-author'>{authorName}</div>
+          <div className='article-card-date'>{date}</div>
           {isAuthor ? (
             <div className='article-card-buttons-container'>
               <IconButton img={editImg} click={clickChange}></IconButton>
@@ -172,6 +196,20 @@ function filterArticlesByQuery(articles, query) {
     return title.toLowerCase().includes(lowerQuery)
   })
 }
+function sortArticlesByCreatedAt(posts) {
+  // Используем метод sort() для сравнения постов по полю createdAt
+  posts.sort((postA, postB) => {
+    const createdAtA = new Date(postA.createdAt)
+    const createdAtB = new Date(postB.createdAt)
+
+    // Сравниваем даты в обратном порядке (сначала самые новые)
+    if (createdAtA > createdAtB) return -1
+    if (createdAtA < createdAtB) return 1
+    return 0
+  })
+
+  return posts
+}
 function deletAarrImgFileNames(arrImgFileNames, authorId, userId) {
   if (authorId !== userId) return
   if (arrImgFileNames.length === 0) return
@@ -189,6 +227,35 @@ async function deleteImgFromDb(fileNameToDelete) {
   } catch (error) {
     console.error('Произошла ошибка при удалении изображения:', error)
   }
+}
+function formatDate(inputTime) {
+  const dateTime = new Date(inputTime)
+
+  function getMonthName(monthNumber) {
+    const monthNames = [
+      'січня',
+      'лютого',
+      'березня',
+      'квітня',
+      'травня',
+      'червня',
+      'липня',
+      'серпня',
+      'вересня',
+      'жовтня',
+      'листопада',
+      'грудня',
+    ]
+    return monthNames[monthNumber - 1]
+  }
+
+  const formattedTime = `${dateTime.getDate()} ${getMonthName(
+    dateTime.getMonth() + 1
+  )} ${dateTime.getFullYear()}, ${dateTime.getHours()}:${String(
+    dateTime.getMinutes()
+  ).padStart(2, '0')}`
+
+  return formattedTime
 }
 
 export default ArticlesPage

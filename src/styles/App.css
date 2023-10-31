@@ -17,7 +17,7 @@
   border: 2px solid black;
 }
 .comment-info {
-  width: 100%;
+  overflow: hidden;
   padding-left: 15px;
 }
 .comment-right {
@@ -30,7 +30,7 @@
   margin-bottom: 10px;
 }
 .comment-text {
-  max-width: 500px;
+  max-width: 100%;
   margin-bottom: 20px;
   font-size: 18px;
 }
@@ -52,23 +52,7 @@
   width: 100%;
   font-size: 17px;
 }
-.answer-button {
-  background-color: rgb(31, 31, 131);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0px 10px;
-  border: none;
-  cursor: pointer;
-  margin-left: 10px;
-  white-space: nowrap;
-  color: white;
 
-  height: 35px;
-  border-radius: 10px;
-  font-size: 18px;
-  padding: 0px 15px;
-}
 .comment-input-container {
   width: 100%;
   display: flex;
@@ -81,25 +65,39 @@
   padding: 0px 10px;
   height: 100%;
   width: 100%;
-  margin: 0px;
-  margin-right: 10px;
   font-size: 17px;
 }
 .comment-button {
-  background-color: rgb(31, 31, 131);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 35px;
-  border-radius: 10px;
+  height: 37px;
+  border-radius: 17.5px;
   font-size: 18px;
-  padding: 0px 15px;
+  padding: 0px 17px;
   border: none;
   cursor: pointer;
-  /* font-weight: 700; */
   margin: 0px;
   white-space: nowrap;
+  margin-left: 10px;
+
+  transition-duration: 0.3s;
+}
+.comment-button.empty {
+  /* border: 1px solid #333333; */
+  background-color: rgb(231, 231, 231);
+  color: #333333;
+}
+.comment-button.contained {
+  background-color: #424242;
   color: white;
+}
+
+.comment-button.contained:hover {
+  background-color: #202020;
+}
+.comment-button.empty:hover {
+  background-color: rgb(208, 208, 208);
 }
 
 .rating-container {

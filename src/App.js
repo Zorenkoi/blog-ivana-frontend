@@ -10,6 +10,7 @@ import Loading from './components/Loading'
 // import OneArticle from './pages/OneArticle'
 import Header from './components/Header'
 import Modal from './components/Modal'
+import Footer from './components/Footer'
 
 import { login, logout } from './redux/slices/userReducer'
 import axios from './axios'
@@ -36,20 +37,23 @@ const App = () => {
   })
 
   return (
-    <Router>
-      <Header />
-      <Modal />
-      <div className='wrapper'>
-        <Switch>
-          <Suspense fallback={<Loading />}>
-            <Route path='/' exact component={ArticlesPage} />
-            <Route path='/createarticle' component={CreateArticlePage} />
-            <Route path='/changearticle/:id' component={ChangeArticlePage2} />
-            <Route path='/articles/:id' component={OneArticle} />
-          </Suspense>
-        </Switch>
-      </div>
-    </Router>
+    <div className='app'>
+      <Router>
+        <Header />
+        <Modal />
+        <div className='wrapper'>
+          <Switch>
+            <Suspense fallback={<Loading />}>
+              <Route path='/' exact component={ArticlesPage} />
+              <Route path='/createarticle' component={CreateArticlePage} />
+              <Route path='/changearticle/:id' component={ChangeArticlePage2} />
+              <Route path='/articles/:id' component={OneArticle} />
+            </Suspense>
+          </Switch>
+        </div>
+        <Footer />
+      </Router>
+    </div>
   )
 }
 
